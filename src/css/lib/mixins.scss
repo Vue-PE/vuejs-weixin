@@ -1,0 +1,145 @@
+@mixin mini-border($direction: top,  $color: #888, $pseudo: before, $radius: 0px, $border-style: solid){
+    &:#{$pseudo}{
+        content: '';
+        position: absolute;
+        z-index: 1;
+        height: 1px;
+
+        @if $direction == all{
+            top: 0px;
+            left: 0px;
+            width: 198%;
+            height: 198%;
+            border: $border-style 1px $color;
+
+            border-radius: $radius;
+
+            @include rotate(0deg , 0.5, 0.5, 0, 0);
+        }
+        
+        @if $direction == top{
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            background-color: $color;
+            @include rotate(0deg , 1, 0.5, 0, 0);
+        }
+
+        @if $direction == bottom{
+            bottom: 0px;
+            left: 0px;
+            width: 100%;
+            background-color: $color;
+            @include rotate(0deg , 1, 0.5, 50%, 50%);
+        }
+
+        @if $direction == left{
+            top: 0px;
+            left: 0px;
+            width: 1px;
+            height: 100%;
+            background-color: $color;
+            @include rotate(0deg, 0.5 , 1);
+        }
+
+        @if $direction == right{
+            top: 0px;
+            right: 0px;
+            width: 1px;
+            height: 100%;
+            background-color: $color;
+            @include rotate(0deg, 0.5 , 1);
+        }
+    }
+}
+
+
+@mixin offset-center()
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    
+    @include transform(translate(-50%, -50%));
+    -webkit-transform: translate(-50%, -50%);
+}
+
+
+@mixin fix-sprite($sprites, $name, $double: 2) 
+{
+    background-image: sprite-url($sprites);
+    background-position: nth(sprite-position($sprites, $name), 1) / $double nth(sprite-position($sprites, $name), 2) /$double;
+    background-size: sprite-width($sprites) / $double sprite-height($sprites) / $double;
+    background-repeat: no-repeat;
+}
+
+// 旋转缩放
+@mixin rotate($direction: 0deg, $scaleX: 1, $scaleY: 1, $originX: 50%, $originY: 50%){
+    -moz-transform:rotate($direction) scale($scaleX,$scaleY) translate(0px,0px) skew(0deg,0deg);
+    -moz-transform-origin:$originX $originY;
+    -webkit-transform:rotate($direction) scale($scaleX,$scaleY) translate(0px,0px) skew(0deg,0deg);
+    -webkit-transform-origin:$originX $originY;
+    -o-transform:rotate($direction) scale($scaleX,$scaleY) translate(0px,0px) skew(0deg,0deg);
+    -o-transform-origin:$originX $originY;
+    transform:rotate($direction) scale($scaleX,$scaleY) translate(0px,0px) skew(0deg,0deg);
+    transform-origin:$originX $originY
+}
+// 动画
+@mixin animate($time: 1.5s, $function: linear){
+    -webkit-transition: all $time $function;
+    -moz-transition: all $time $function;
+    transition: all $time $function;
+}
+// 遮罩
+@mixin mask($o: .8, $z: 10, $c: #000){
+    width: 100%;
+    height: 100%;
+    background-color: $c;
+    z-index: $z;
+    opacity: $o;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    filter:Alpha(opacity=80)
+}
+// 绝对居中
+@mixin abscenter($width: null, $height: null) {
+    position: fixed;
+    z-index: 1002;
+    top: 50%;
+    left: 50%;
+    width: $width;
+    margin-left: -$width / 2;
+    @if $height {
+        height: $height;
+        margin-top: -$height / 2;
+    } @else{
+        transform-origin: 50% 0%;
+        transform: translateY(-50%);
+    }
+}
+
+// 平均栅格
+@mixin averagegrid($n: null, $r: null){
+    width: calc(100% / #{$n} - ((#{$n} - 1) * #{$r}));
+    margin-right: $r;
+    display: inline-block;
+    &:last-child{
+        margin-right: 0;
+    }
+}
+// 按钮
+@mixin buttons($width: 100%, $height: 40px, $bg: #fff, $color: #666, $size: 14px, $radius: 4px, $border: null){
+    width: $width;
+    height: $height;
+    line-height: $height;
+    background-color: $bg;
+    color: $color;
+    font-size: $size;
+    text-align: center;
+    border-radius: $radius;
+    @if $border {
+        position: relative;
+        @include mini-border(all, $border, before, $radius);
+    }
+}

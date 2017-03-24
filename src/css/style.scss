@@ -1,0 +1,80 @@
+$show-color: #ff7302;
+.show-color{color: $show-color;}
+
+@import "lib/base";
+@import "lib/animate";
+@import "lib/mixins";
+@import "mui/mui";
+@import "mui/mui.picker.min";
+
+@import "lib/function";
+@import "lib/cropper";
+
+// 动画
+.routeranimate-transition {
+    // @extend .animated;
+}
+.routeranimate-enter {
+    @extend .animated;
+    @extend .fadeIn;
+}
+.routeranimate-leave {
+    // @extend .animated;
+    // @extend .fadeOutRight;
+}
+.fade-in-left{
+    @extend .animated;
+    @extend .fadeInLeft;
+}
+.fade-in-right{
+    @extend .animated;
+    @extend .fadeInRight;
+}
+
+// 全局页面
+.page{
+    overflow-x: hidden;
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    bottom: 0px;
+}
+
+
+@import "views/login";
+@import "views/tech";
+@import "views/consumer";
+@import "views/manage";
+
+// fix mui css
+body{
+    background-color: #fff;
+}
+.mui-dtpicker.mui-active{
+    text-align: left;
+}
+.mui-slider{
+    background-color: #fff;
+}
+.mui-dtpicker-header button.mui-btn-blue, .mui-poppicker-header button.mui-btn-blue{
+    background-color:$show-color;
+    border: 1px solid $show-color;
+}
+.mui-btn-warning, .mui-btn-yellow, .mui-btn-outlined{
+    border: none;
+    background-color: $show-color;
+    height: 40px;
+    line-height: 40px;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 200;
+}
+.mui-btn-outlined{
+    background-color: #999;
+}
+.mui-slider-indicator .mui-active.mui-indicator{
+    background: $show-color;
+    box-shadow: none;
+}
+.mui-table-view:before, .mui-table-view:after, .mui-table-view-cell:after{background-color: #DDD;}
+.mui-ios .mui-table-view-cell{font-size: 15px;span{font-size: 14px;}}

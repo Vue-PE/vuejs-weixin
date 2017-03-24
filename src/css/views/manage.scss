@@ -1,0 +1,334 @@
+.page.manage{
+    text-align: center;
+    background-color: #f1f1f1;
+    .mui-scroll-wrapper{
+        top: 44px;
+        bottom: 50px;
+    }
+    header.mui-bar{
+        background: $show-color;
+        .mui-title{color: #fff;}
+        .mui-action-back{color: #fff;}
+        @include mini-border(bottom, #ddd, after);
+        &.haed2{
+            background: #FFF;
+            .mui-title{color: #333;}
+            .mui-action-back{color: #333;}
+        }
+    }
+    .mui-bar{
+        box-shadow: none;
+        background-color: #333;
+        .mui-tab-item, .winslow-tab-item{
+            color: #fff;
+            &.mui-active{
+                color: $show-color;
+            }
+        }
+        .mui-tab-label{
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 300;
+        }
+        .iconfont{
+            font-size: 22px;
+        }
+    }
+    .mui-segmented-control{
+        background-color: #fff;
+        border-bottom: 1px solid #ddd;
+        .mui-active{
+            color: $show-color;
+            border-bottom: 2px solid $show-color;
+        }
+    }
+    .winslow-container{
+        text-align: left;
+        h1{
+            font-size: 16px;
+            color: #333;
+        }
+        p{
+            font-size: 12px;
+            color: #757575;
+            margin: 0;
+            i{
+                color: $show-color;
+                margin-right: 5px;
+            }
+            a{color: #757575;}
+        }
+    }
+    .item-container{
+        &:before{display: none;}
+        &:after{display: none;}
+        text-align: left;
+        .mui-table-view-cell:after{left: 75px;}
+        .mui-media-object{
+            max-width: 50px;
+            width: 50px;
+            height: 50px;
+        }
+        .mui-media-body{
+            font-size: 14px;
+            padding-right: 70px;
+            @extend .mui-ellipsis;
+            p{font-size: 12px;}
+            &.center{
+                margin-top: 12px;
+            }
+        }
+    }
+    .status{
+        display: block;
+        position: absolute;
+        right: 10px;
+        top: 35px;
+        font-size: 12px;
+        background: #fc0303;
+        height: 20px;
+        line-height: 20px;
+        width: 60px;
+        border-radius: 4px;
+        text-align: center;
+        color: #fff;
+        &.center{
+            top: 24px;
+        }
+        &.wait{background-color: #fc0303;}
+        &.remove{background-color: #feae01;}
+        &.add{background-color: #01a744;}
+        &.fail{background-color: #ccc;}
+        &.true{
+            background-color: #f00;
+            width: 35px;
+            right: 50px
+        }
+        &.false{
+            background-color: #999;
+            width: 35px;
+        }
+        &.agree{
+            background-color: #fff;
+            color: #01a744;
+        }
+        &.reject{
+            background-color: #fff;
+            color: #fc0303;
+        }
+    }
+    .status-text{
+        display: block;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        font-size: 12px;
+        width: 60px;
+        text-align: center;
+        color: #757575;
+    }
+    .set{
+        width: 100%;
+        padding: 15px 0px;
+        background-color: #fff;
+        position: fixed;
+        z-index: 12;
+        left: 0px;
+        top: 44px;
+        &.v-enter{
+            @extend .animated;
+            @extend .fadeInDown;
+        }
+        &.v-leave{
+            @extend .animated;
+            @extend .fadeOutUp;
+        }
+        h1{
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        p{
+            display: block;
+            padding: 10px 10%;
+            text-align: left;
+            color: #757575;
+            background-color: #f1f1f1;
+        }
+        a.on{
+            display: inline-block;
+            width: 100px;
+            height: 40px;
+            position: relative;
+            font-size: 18px;
+            color: #fff;
+            background-color: $show-color;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 30px;
+            margin-right: 10px;
+        }
+        a.off{
+            display: inline-block;
+            width: 100px;
+            height: 40px;
+            position: relative;
+            font-size: 18px;
+            color: #b3b3b3;
+            @include mini-border(all, #b3b3b3, after, 40px);
+            background-color: #fff;
+            text-align: center;
+            margin-right: 10px;
+            line-height: 40px;
+            border-radius: 30px;
+        }
+    }
+    .mask-bg{
+        position: fixed;
+        left: 0px;
+        top: 44px;
+        z-index: 11;
+        background-color: #000;
+        opacity: .4;
+        right: 0px;
+        bottom: 0px;
+    }
+    .project{
+        em.price{color: $show-color;font-size: 14px;margin-right: 8px;}
+        .prostatus{
+            position: absolute;
+            right: 15px;
+            top: 12px;
+            text-align: center;
+            font-size: 12px;
+            color: #757575;
+            .btn{
+                display: block;
+                font-size: 12px;
+                background: #fc0303;
+                height: 20px;
+                line-height: 20px;
+                width: 62px;
+                border-radius: 4px;
+                text-align: center;
+                color: #fff;
+                margin-top: 5px;
+                &.true{
+                    background-color: #01a744;
+                    &:before{
+                        @extend .mui-icon;
+                        @extend .mui-icon-checkmarkempty;
+                        width: 20px;
+                        height: 20px;
+                        vertical-align: middle;
+                        line-height: 16px;
+                    }
+                }
+                &.false{
+                    background-color: #b3b3b3;
+                    &:before{
+                        @extend .mui-icon;
+                        @extend .mui-icon-closeempty;
+                        width: 20px;
+                        height: 20px;
+                        vertical-align: middle;
+                        line-height: 16px;
+                        color: #f00;
+                    }
+                }
+            }
+        }
+    }
+    .shop-title-container{
+        background-color: #fff;
+        padding: 10px 15px;
+        position: relative;
+        text-align: left;
+        min-height: 70px;
+        @include mini-border(bottom, #ddd, after);
+        &.order{
+            padding-left: 75px;
+            img{
+                position: absolute;
+                left: 15px;
+                top: 10px;
+                height: 50px;
+                width: 50px;
+            }
+            &:after{left: 75px;}
+        }
+        .price{
+            position: absolute;
+            right: 15px;
+            top: 12px;
+            text-align: right;
+            em{
+                font-size: 18px;
+                color: $show-color;
+                display: block;
+            }
+            span{
+                color: #999;
+                font-size: 12px;
+            }
+        }
+        h1{
+            font-size: 16px;
+            color: #333;
+            font-weight: 400;
+        }
+        h4{
+            font-size: 12px;
+            color: #333;
+            margin-top: 6px;
+        }
+        h5{
+            margin-top: 6px;
+            font-weight: 300;
+            font-size: 12px;
+            line-height: 16px;
+            span{
+                color: $show-color;
+                font-size: 12px;
+                margin-right: 10px;
+                display: inline-block;
+            }
+        }
+    }
+    .pro-btns{
+        margin-top: 30px;
+        text-align: center;
+        a{
+            display: inline-block;
+            margin: 0px 5px;
+            padding: 6px 20px;
+            font-size: 16px;
+            color: #fff;
+            &.true{background-color: #01a744;}
+            &.false{background-color: #b3b3b3;}
+            &.true-ok{
+                background-color: #01a744;
+                &:before{
+                    @extend .iconfont;
+                    content: '\e60b';
+                    font-size: 14px;
+                    vertical-align: top;
+                    margin-right: 5px;
+                }
+            }
+            &.false-ok{
+                background-color: #b3b3b3;
+                &:before{
+                    @extend .mui-icon;
+                    @extend .mui-icon-closeempty;
+                    width: 30px;
+                    height: 30px;
+                    font-size: 30px;
+                    vertical-align: middle;
+                    line-height: 26px;
+                    color: #f00;
+                }
+            }
+        }
+    }
+}

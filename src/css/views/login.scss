@@ -1,0 +1,94 @@
+.page.login{
+    background: #272727 url(../images/login/login-bg.png) center center no-repeat;
+    background-size: cover;
+    text-align: center;
+    .mui-scroll-wrapper{
+        top: 44px;
+        bottom: 50px;
+    }
+    .mui-bar-nav{
+        box-shadow: none;
+        background-color: #272727;
+        @include mini-border(bottom, #757575, after);
+        .mui-title{
+            color: #fff;
+        }
+        a{
+            color: #fff;
+        }
+    }
+    .login-tip{
+        width: 50%;
+        margin-top: 25%;
+        margin-bottom: 10px;
+    }
+    .btn-check{
+        width: 34%;
+        height: 40px;
+        line-height: 40px;
+        font-size: 14px;
+        color: #fff;
+        display: block;
+        margin: 15px auto;
+        text-align: center;
+        position: relative;
+        border-radius: 40px;
+        @include mini-border(all, #fff, after, 40px);
+        &.active{
+            background-color: $show-color;
+            &:after{display: none;}
+        }
+    }
+    .text{
+        color: #fe0000;
+        font-size: 12px;
+        margin-top: 20px;
+        padding-right: 15px;
+        padding-left: 15px;
+        &.gay{color: #757575;}
+    }
+    .password{
+        font-size: 12px;
+        margin-top: 20px;
+        color: #fff;
+        line-height: 36px;
+        input{
+            display: inline-block;
+            width: 32%;
+            height: 40px;
+            background: #fff;
+            line-height: 40px;
+            padding: 0;
+            margin: 0;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 16px;
+            color: #333;
+        }
+    }
+    .number{
+        font-size: 12px;
+        margin-top: 10px;
+        color: #fff;
+        line-height: 36px;
+        input{
+            display: inline-block;
+            width: 32%;
+            height: 40px;
+            background: none;
+            line-height: 40px;
+            padding: 0;
+            border: 0;
+            border-bottom: 1px solid #fff;
+            margin: 0;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 16px;
+            color: #fff;
+        }
+    }
+    .mui-btn-warning,.mui-btn-outlined{
+        width: 90%;
+        margin: 20px auto 0px auto;
+    }
+}
