@@ -1,7 +1,6 @@
 {
   "name": "vue-webpack",
   "version": "1.0.0",
-  "description": "",
   "main": "gulpfile.js",
   "dependencies": {
     "babel-core": "^6.10.4",
@@ -35,5 +34,14 @@
   },
   "scripts": {},
   "author": "winslow",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sw-wang/vuejs-.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sw-wang/vuejs-/issues"
+  },
+  "homepage": "https://github.com/sw-wang/vuejs-#readme",
+  "description": ""
 }
