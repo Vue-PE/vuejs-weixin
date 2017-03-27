@@ -9,7 +9,8 @@
     <div class="mui-scroll">
     <div class="title">订单详情</div>
     <div class="shop-title-container order">
-        <img :src="$store.state.URL + userOrderInfo.item_image">
+        <div class="image-size-list" style="background-image: url({{$store.state.URL + userOrderInfo.item_image}});"></div>
+        <!-- <img :src="$store.state.URL + userOrderInfo.item_image"> -->
         <h1>{{userOrderInfo.item_name}}</h1>
         <h5>套餐详情：{{userOrderInfo.item_intro}}</h5>
         <div class="price">

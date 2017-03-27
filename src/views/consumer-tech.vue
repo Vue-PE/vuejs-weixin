@@ -53,7 +53,8 @@
     <ul class="mui-table-view item-container">
         <li class="mui-table-view-cell mui-media" v-for="item in proList">
             <a v-link="{path: '/consumer-pro/' + this.$route.params.token + '/' + this.$route.params.storeid + '/' + item.item_id}">
-                <img class="mui-media-object mui-pull-left" :src="$store.state.URL + item.item_image">
+                <div class="mui-media-object mui-pull-left image-size" style="background-image: url({{$store.state.URL + item.item_image}});"></div>
+                <!-- <img class="mui-media-object mui-pull-left" :src="$store.state.URL + item.item_image"> -->
                 <div class="mui-media-body">
                     {{item.item_name}}
                     <p class="mui-ellipsis">套餐详情：{{item.item_intro}}</p>

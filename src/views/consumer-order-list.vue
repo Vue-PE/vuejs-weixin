@@ -15,7 +15,8 @@
     <ul class="order-container">
         <li v-for="item in userOrderlist">
             <div class="order-text">
-                <img :src="$store.state.URL + item.item_image">
+                <div class="image-size-list" style="background-image: url({{$store.state.URL + item.item_image}});"></div>
+                <!-- <img :src="$store.state.URL + item.item_image"> -->
                 <h1>{{item.item_name}}</h1>
                 <h6>下单时间：{{item.order_createtime | format 'yyyy-MM-dd hh:mm'}}</h6>
                 <p>总价：￥{{item.order_totalprice}}</p>
