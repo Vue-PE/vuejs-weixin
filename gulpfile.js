@@ -14,7 +14,7 @@ var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
 // 项目配置
 var app = {
-    version: '0.4.2',
+    version: '0.4.3',
     src: './src/',
     build: './build/'
 }

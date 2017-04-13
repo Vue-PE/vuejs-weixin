@@ -11,7 +11,7 @@
     <div class="shop-title-container order">
         <div class="image-size-list" style="background-image: url({{$store.state.URL + userOrderInfo.item_image}});"></div>
         <!-- <img :src="$store.state.URL + userOrderInfo.item_image"> -->
-        <h1>{{userOrderInfo.item_name}}</h1>
+        <h1 style="width: 80%;">{{userOrderInfo.item_name}}</h1>
         <h5>套餐详情：{{userOrderInfo.item_intro}}</h5>
         <div class="price">
             <em>￥{{userOrderInfo.item_price}}</em>
@@ -30,7 +30,10 @@
             服务类型<span class="mui-pull-right">{{userOrderInfo.order_address == 0 ? '在店消费' : '技师上门'}}</span>
         </li>
         <li class="mui-table-view-cell">
-            订单总价<span class="mui-pull-right">￥{{userOrderInfo.order_totalprice}}</span>
+            订单总价<span class="mui-pull-right">￥{{userOrderInfo.item_price}}</span>
+        </li>
+        <li class="mui-table-view-cell" v-if="obj">
+            商品消费<span class="mui-pull-right">￥{{obj}}</span>
         </li>
         <li class="mui-table-view-cell show-color">
             需付款<span class="mui-pull-right show-color">￥{{userOrderInfo.order_totalprice}}</span>
@@ -69,13 +72,21 @@ export default{
     data: function(){
         return{
             userOrderInfo: {},
-            status: ''
+            status: '',
+            obj: false
         }
     },
     ready: function(){
         document.title = '订单详情'
         mui('.mui-scroll-wrapper').scroll({bounce: false})
-        this.$store.state.showTip({type: 'loading', content: '加载中...' })
+        this.$store.state.showTip({type: 'loading', content: '加载中...' });
+        this.$http.post(API.user_get_this_order_goods, {
+            sid: this.$route.params.storeid,
+            pid: this.$route.params.id
+        }).then( (data) => {
+            if(data.data.errorInfo) return;
+            this.obj = data.data.object;
+        });
         this.$http.post(API.getUserOrderInfo, {
             order_id: this.$route.params.id,
             sid: this.$route.params.storeid

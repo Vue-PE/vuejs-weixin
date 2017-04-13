@@ -12,9 +12,9 @@
     <div id="item1" class="mui-control-content fade-in-left mui-active" v-if="Ordering">
         <ul class="customers-container">
             <li>
-                <img :src="Ordering.wechat_headimgurl"> 
-                {{Ordering.wechat_nickname}}
-                <i class="lv lv{{Ordering.wechat_userlevel}}"></i>
+                <img v-if="Ordering.wechat_headimgurl" :src="Ordering.wechat_headimgurl"> 
+                {{Ordering.wechat_nickname ? Ordering.wechat_nickname : '前台开单'}}
+                <i v-if="Ordering.wechat_userlevel" class="lv lv{{Ordering.wechat_userlevel}}"></i>
             </li>
             <li>项目：<em>{{Ordering.item_name}}</em></li>
             <li>消费类型：{{Ordering.order_address == 0 ? '在店消费' : '技师上门'}}</li>
@@ -37,6 +37,7 @@
         </form>
         <div class="timer" v-if="Ordering.order_addtime">{{jishi}}</div>
         <button type="button" class="mui-btn mui-btn-warning mui-btn-block" v-if="!Ordering.order_addtime || workType!='start'" @click="updateOrderStae()">确定</button>
+        <a style="font-size: 12px;color: #ff7302;" @click="chooseGood(Ordering.order_id)">商品消费</a>
     </div>
 
     <div id="item1" class="mui-control-content fade-in-left mui-active" v-if="!Ordering">
@@ -123,6 +124,28 @@
             <span class="mui-tab-label">我的</span>
         </a>
     </nav>
+
+    <div class="choose-good" v-show="goodShow">
+        <div class="container">
+            <h1>选择商品</h1>
+            <ul class="wrap">
+                <li v-for="item in goodsList" data-id="{{item.goods_id}}">
+                    <img src="{{$store.state.URL+item.goods_head}}">
+                    <span class="name">{{item.goods_name}}</span>
+                    <span class="price">￥{{item.goods_price}}</span>
+                    <div class="mui-numbox">
+                      <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                      <input class="mui-numbox-input" type="number" value="{{item.value}}" />
+                      <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                    </div>
+                </li>
+                <div v-if="goodsList.length<=0" class="no-data"><h6>店铺没有商品可选</h6></div>
+            </ul>
+            <footer>
+                <a @click="goodShow = false">取消</a><a @click="subGood()">确定</a>
+            </footer>
+        </div>
+    </div>
 </div>
 </template>
 
@@ -132,6 +155,7 @@ export default{
     data: function(){
         return{
             massagist_status: -1,
+            massagist_belongs: false,
             getHaveProject: [],
             getHandleProject: [],
             getAddProject: [],
@@ -141,7 +165,13 @@ export default{
             Ordering: null,
             workType: 'start',
             jishi: '',
-            isChangeStatu: 0
+            isChangeStatu: 0,
+            goodShow: false,
+            goodsList: [],
+            goodsInfo: {
+                oid: null,
+                gid: []
+            }
         }
     },
     ready: function(){
@@ -153,8 +183,21 @@ export default{
             if(data.data.errorInfo) return
             this.$store.state.hideTip()
             this.massagist_status = data.data.object.massagist_status
+            this.massagist_belongs = data.data.object.massagist_belongs
         })
-        this.getProject()
+        this.getProject();
+        let me = this;
+        $('.choose-good').on('click', '.mui-numbox-btn-plus', function(){
+            var _ = parseInt($(this).prev().val());
+            $(this).prev().val(_+1);
+            me.setGoodId();
+        });
+        $('.choose-good').on('click', '.mui-numbox-btn-minus', function(){
+            var _ = parseInt($(this).next().val());
+            if(_<=0) return;
+            $(this).next().val(_-1);
+            me.setGoodId();
+        });
     },
     watch: {
         'massagist_status': function(val){
@@ -174,6 +217,71 @@ export default{
         local: function(name){
             this.$router.go('/'+ name +'/' + this.$route.params.token)
         },
+        chooseGood(id){
+            this.$store.state.showTip({type: 'loading', content: '加载中...' })
+            let me =this;
+            this.$http.post(API.user_get_this_order_goods, {
+                sid: this.massagist_belongs,
+                pid: id
+            }).then( (data) => {
+                if(data.data.errorInfo) return
+                let goodList = data.data.list ? data.data.list : [];
+                this.$http.post(API.user_get_goods_select, {
+                    sid: this.massagist_belongs,
+                }).then( (data) => {
+                    if(data.data.errorInfo) return
+                    this.$store.state.hideTip();
+                    this.goodsList = [];
+                    for(var i=0; i<data.data.list.length; i++){
+                        this.goodsList[i] = data.data.list[i];
+                        this.goodsList[i].value = 0;
+                        for(var j=0; j<goodList.length; j++){
+                            if(goodList[j].id == me.goodsList[i].goods_id){
+                                me.goodsList[i].value = goodList[j].num;
+                            }
+                        }
+                    }
+                    this.goodShow = true;
+                    this.goodsInfo.oid = id;
+                });
+            });
+        },
+        setGoodId(){
+            let me = this;
+            me.goodsInfo.gid = [];
+            for(var i=0; i<$('.choose-good li').length; i++){
+                for(var j=0; j<$('.choose-good li:eq('+i+')').find('input').val(); j++){
+                    me.goodsInfo.gid.push($('.choose-good li:eq('+i+')').attr('data-id'));
+                }
+            }
+        },
+        subGood(){
+            let me = this;
+            if(me.goodsInfo.gid.length == 0){
+                me.$store.state.showTip({type: 'error', content: '请添加或修改商品' })
+                return;
+            }
+            this.$store.state.showTip({type: 'loading', content: '加载中...' })
+            this.$http.post(API.user_add_goods_this_order, {
+                sid: this.massagist_belongs,
+                id: this.goodsInfo.oid,
+                goods: this.goodsInfo.gid
+            }).then( (data) => {
+                if(data.data.errorInfo) return
+                this.$store.state.showTip({type: 'success', content: '处理成功' });
+                let socket = new WebSocket("ws://121.43.163.207:9509");
+                let self = this;
+                socket.onopen = function (event) {
+                    socket.send('{"store": "'+ self.$route.params.storeid +'","fun1":"1","fun2":"2","fun3":"3"}');
+                };
+                socket.onmessage = function (event) {
+                    console.log(event.data);
+                }
+                setTimeout(()=>{
+                    location.reload();
+                }, 1500);
+            })
+        },
         updateOrderStae(){
             this.$store.state.showTip({type: 'loading', content: '处理中...' })
             this.$http.post(API.updateOrderStae, {
@@ -181,7 +289,15 @@ export default{
             }).then( (data) => {
                 if(data.data.errorInfo) return
                 this.$store.state.hideTip()
-                this.$store.state.showTip({type: 'success', content: '处理成功' })
+                this.$store.state.showTip({type: 'success', content: '处理成功' });
+                let socket = new WebSocket("ws://121.43.163.207:9509");
+                let self = this;
+                socket.onopen = function (event) {
+                    socket.send('{"store": "'+ self.$route.params.storeid +'","fun1":"1","fun2":"2","fun3":"3"}');
+                };
+                socket.onmessage = function (event) {
+                    console.log(event.data);
+                }
                 setTimeout(()=>{
                     location.reload()
                 }, 1500)

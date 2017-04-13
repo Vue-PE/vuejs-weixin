@@ -14,6 +14,7 @@ import consumerOrderSub from './views/consumer-order-sub.vue'
 import consumerTechCom from './views/consumer-tech-comment.vue'
 import consumerShopCom from './views/consumer-shop-comment.vue'
 import consumerVip from './views/consumer-vip.vue'
+import consumerMember from './views/consumer-member.vue'
 import consumerOrderInfo from './views/consumer-order-info.vue'
 import consumerOrderList from './views/consumer-order-list.vue'
 import consumerMy from './views/consumer-my.vue'
@@ -86,6 +87,8 @@ export default function(router){
         '/manage-project-info/:token/:id/:switch': { name: 'manageProjectInfo', component: manageProjectInfo },
         
         '/consumer-images/:token': { name: 'consumerImages', component: consumerImages },
+
+        '/consumer-member/:token/:storeid': { name: 'consumerMember', component: consumerMember },
         
     })
 

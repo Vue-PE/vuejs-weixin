@@ -31,6 +31,10 @@
             性别
             <span class="mui-pull-right">{{userInfo.wechat_sex | sex}}</span>
         </li>
+        <li class="mui-table-view-cell" v-link="{path: '/consumer-member/' + this.$route.params.token + '/' + this.$route.params.storeid}">
+            会员信息
+            <span class="mui-pull-right">{{userInfo.wechat_member || '没有绑定'}}</span>
+        </li>
     </ul>
     </div>
     </div>
@@ -54,25 +58,13 @@
             <div><button type="button" class="mui-btn mui-btn-block" @click="$store.state.locationReload()">取消</button></div>
             <div><button type="button" class="mui-btn mui-btn-primary mui-btn-block" @click="saveCrop">保存</button></div>
         </div>
-    </div>
-
-    <!-- <vue-core-image-upload  
-      v-bind:class="['pure-button']" 
-      v-bind:crop="true" 
-      text="" 
-      v-bind:head="true" 
-      v-bind:token="$route.params.token" 
-      url="http://www.yangshenghui.net/admin/api/upload_img" 
-      extensions="png,gif,jpeg,jpg" v-on:imageuploading="imageuploading" v-on:imageuploaded="imageuploaded">
-    </vue-core-image-upload> -->
-    
+    </div> 
     
 </div>
 </template>
 
 <script>
 import EXIF from '../vendor/exif.js'
-// import VueCoreImageUpload from '../vendor/vue.core.image.upload.vue'
 import Start from '../components/start.vue'
 import '../vendor/mui.picker.all'
 import '../vendor/mui.poppicker'
@@ -161,7 +153,7 @@ export default{
                         setTimeout(()=>{me.resload()}, 2000)
                     })
                 }
-            })
+            });
         },
         resload(){
             this.$store.state.showTip({type: 'loading', content: '加载中...' })

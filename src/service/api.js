@@ -40,4 +40,11 @@ export default {
     deleteOrderList: api + 'delete_order_list',
     wxPayIndex: pay + 'res_order',
     wxPayOrder: pay + 'order_num',
+    // new
+    userGetHandSelect: api + 'user_get_hand_select',
+    user_get_goods_select: api + 'user_get_goods_select',
+    user_add_goods_this_order: api + 'user_add_goods_this_order',
+    user_get_this_order_goods: api + 'user_get_this_order_goods',
+    Binding_member: api + 'Binding_member',
+    user_get_member_info: api + 'user_get_member_info',
 }
